@@ -1,30 +1,66 @@
-Wifi Troubleshooting
-====================
+# WiFi Troubleshooting
 
-**Problem:**
+__Problem:__
 
-Can connect to the conference wifi successfully but some/all webpages
-won’t load.
+Can connect to the conference wifi successfully, but webpages won't load. 
 
-**Things to try:**
 
-1.  Turn on airplane mode for ~30 seconds and then reconnect to the wifi
-    (causes wifi to forget your computer and assign you a new IP
-    address)
-2.  Renew DHCP lease (same as above)
-    -   Mac: *Open Network Preferences*, *Advanced*, *TCP IP*, *Renew
-        DHCP Lease*
-3.  Disconnect and reconnect to wifi
-4.  Try a different browser
-5.  Restart your computer
-6.  Double check that you are using the conference wifi and not the
-    hotel wifi
+__Verify the Problem:__
 
-Other notes:
-============
+Go to [speedtest.net](https://www.speedtest.net) and click "go".
+If your upload and download speeds are << 0.5 Mbps, your problem is, in fact, related to your connection to the internet or the WiFi.
 
--   `devtools::install_github(...)` fails with an error message saying:
-    “Error: HTTP error 403. API rate limit exceeded for…”
-    -   Meaning: there are too many people also installing packages from
-        GitHub at the moment. Try again in 5 minutes and see if you have
-        any luck.
+
+__Things to try:__
+
+(These are really just wild guesses of what might work and what *seemed* to have worked for some people. Correlation != causation, etc.)
+
+1. Disable any virtual private network (VPN) that might be running your computer and interfering with the connection.
+    (This may reduce the security of your network connection.)
+2. Get a new IP address for your computer on the WiFi.
+    To do so:
+    - Disable your WiFi (or enable airplane mode) for ~30 seconds and then reconnect to the wifi.
+    - Renew your DHCP lease
+        - on macOS: *System Preferences*, *Network*, select WiFi, *Advanced*, *TCP/IP*, *Renew DHCP Lease*
+3. Remove the conference SSID (`rstudio20`) from your known networks, and then add it again after ~30 seconds.
+    - on macOS: *System Preferences*, *Network*, select WiFi, *Advanced*, *WiFi*, select `rstudio20` and delete it.
+        Then join the WiFi again.
+4. Try a different web browser.
+5. Power cycle your computer.
+6. It appears that the connectivity is better in different areas of the hotel; you might want to try downloading necessary material somewhere else.
+
+
+# RStudio.cloud Troubleshooting
+
+__Problem:__
+
+Your RStudio Server Pro instance is stuck loading.
+
+__Things to try:__
+
+1. Delete your browser cache. 
+    There's *no* need to delete cookies, history, autocomplete suggestions etc.
+    Then restart your browser.
+2. If you can get to the overview of your RStudio Server Pro instances, quit the instance that isn't loading and add a new one.
+   This will delete any *unsaved* changes in your files.
+
+
+# Package Installation Troubleshooting
+
+__Problem:__
+
+When running `remotes::install_github()` you get:
+
+> `Error: HTTP error 403. API rate limit exceeded for` ...
+
+
+__Things to try:__
+
+This problem is likely caused by many conference attendees sharing the same external IP address.
+As GitHub.com notices a lot of these anonymous requests from the same IP address, we collectively hit a rate limit that GitHub.com has implemented for security reasons.
+
+To solve this problem you need a GitHub.com account, and then save some credentials (a personal access token, or PAT) on your machine.
+Notice that this will change the environment on your computer.
+
+The {usethis} package has a convenience function [`usethis::browse_github_token()`](https://usethis.r-lib.org/reference/browse_github_token.htm) that you can run from your R console to guide you through the process.
+You can learn more about the GitHub authentication [here](https://happygitwithr.com/github-pat.html).
