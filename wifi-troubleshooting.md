@@ -2,7 +2,7 @@
 
 ## Problem
 
-Can connect to the conference WiFi successfully, but webpages won't load. 
+You can connect to the conference WiFi successfully, but webpages won't load. 
 
 
 ### Verify the Problem
@@ -49,9 +49,10 @@ Your RStudio Server Pro session is stuck loading.
 
 When running `remotes::install_github()` you get:
 
-> `Error: HTTP error 403. API rate limit exceeded for...`
+> `Error: HTTP error 403. API rate limit exceeded for` ...
 
-This problem is likely caused by many conference attendees sharing the same external IP address. As GitHub notices a lot of these anonymous requests from the same IP address, we collectively hit a rate limit that GitHub has implemented for security reasons.
+This problem is likely caused by many conference attendees sharing the same external IP address. 
+As GitHub notices a lot of these unauthenticated requests from the same IP address, we collectively hit a rate limit that GitHub has implemented for security reasons.
 
 
 ### Things to try
